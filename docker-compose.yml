@@ -1,0 +1,11 @@
+services:
+  erm:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: sqlite:////app/data/erm.db
+      UPLOAD_DIR: /app/uploads
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads

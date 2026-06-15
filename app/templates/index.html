@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ЭРМ маршруты</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>ЭРМ маршруты</h1>
+      <p>Автоматический справочник параметров маршрутов из Excel-файлов</p>
+    </div>
+    <a class="download" href="/export">Скачать Excel-отчет</a>
+  </header>
+
+  <main>
+    <section class="panel upload">
+      <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>
+          Файлы .xlsx
+          <input type="file" name="files" accept=".xlsx" multiple>
+        </label>
+        <button type="submit">Загрузить и обработать</button>
+      </form>
+      <form action="/process-folder" method="post">
+        <label>
+          Папка на сервере
+          <input type="text" name="folder_path" placeholder="D:\30_Приложения_и_ЭРМ_2026">
+        </label>
+        <button type="submit">Обработать папку рекурсивно</button>
+      </form>
+      <div class="stats">
+        <span>Маршрутов: <b>{{ stats.routes }}</b></span>
+        <span>Ошибок: <b>{{ stats.issues }}</b></span>
+        <span>Дублей: <b>{{ stats.duplicates }}</b></span>
+        <span>Файлов: <b>{{ stats.logs }}</b></span>
+      </div>
+    </section>
+
+    <nav class="tabs">
+      <button data-tab="routes" class="active">Справочник маршрутов</button>
+      <button data-tab="issues">Ошибки и предупреждения</button>
+      <button data-tab="duplicates">Дубли и расхождения</button>
+      <button data-tab="stops">Остановки</button>
+      <button data-tab="logs">Журнал обработки</button>
+      <button data-tab="history">История изменений</button>
+    </nav>
+
+    <section class="filters">
+      <input id="filterRoute" placeholder="Номер маршрута">
+      <select id="filterStatus">
+        <option value="">Любой статус</option>
+        <option value="ok">Без ошибок</option>
+        <option value="warning">Предупреждение</option>
+        <option value="error">Ошибка</option>
+      </select>
+      <input id="filterFile" placeholder="Имя файла">
+      <label class="check"><input id="filterErrors" type="checkbox"> Только с ошибками</label>
+      <button id="applyFilters">Применить</button>
+    </section>
+
+    <section class="tablewrap">
+      <table>
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
