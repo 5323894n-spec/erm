@@ -24,6 +24,14 @@ uvicorn app.main:app --reload
 
 Откройте `http://127.0.0.1:8000`.
 
+Если команда `uvicorn` не найдена, запустите сервер так:
+
+```bash
+python -m uvicorn app.main:app --reload
+```
+
+Если виртуальное окружение не создалось, не выполняйте `pip install` в системный Python. Сначала установите доступную версию Python и заново создайте `.venv`.
+
 ## Docker
 
 ```bash
@@ -38,7 +46,7 @@ docker compose up --build
 - `app/parser.py` - гибкий разбор Excel-файлов через openpyxl.
 - `app/models.py` - SQLite-модели SQLAlchemy.
 - `app/services.py` - сохранение маршрутов, история, дубли и подтверждения.
-- `app/exporter.py` - Excel-отчет через pandas/openpyxl.
+- `app/exporter.py` - Excel-отчет через openpyxl.
 - `app/templates/index.html` - основной интерфейс.
 - `app/static/` - CSS и JavaScript.
 - `tests/test_parser.py` - тесты ключевой логики разбора.
